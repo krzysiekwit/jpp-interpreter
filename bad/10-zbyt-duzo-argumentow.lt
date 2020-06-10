@@ -1,0 +1,8 @@
+int f(int x, string y){
+  print x;
+  print y;
+  x = x*7;
+  return x;
+}
+
+print f(7, "str", 4);

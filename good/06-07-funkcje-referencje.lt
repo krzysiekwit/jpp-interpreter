@@ -1,0 +1,14 @@
+void f(int &x, int y){
+  x=x*2;
+  y=y+1;
+  print x;
+  print y;
+}
+
+int k = 5;
+f(k, k);
+print k;
+
+// 10
+// 6
+// 10

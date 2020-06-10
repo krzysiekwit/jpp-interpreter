@@ -1,0 +1,11 @@
+int k = 5;
+print k;
+{
+  int k = 7;
+  print k;
+}
+print k;
+
+// 5
+// 7
+// 5

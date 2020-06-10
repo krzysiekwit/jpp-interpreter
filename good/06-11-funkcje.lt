@@ -1,0 +1,13 @@
+int f(int k, string l, bool m){
+  print k;
+  print l;
+  print m;
+  return k*2;
+}
+
+print f(5, "string", false);
+
+// 5
+// "string"
+// False
+// 10

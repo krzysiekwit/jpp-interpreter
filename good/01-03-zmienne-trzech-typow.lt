@@ -1,0 +1,16 @@
+int k = 3, l;
+string s = "str", t;
+bool p, q = false;
+print k;
+print l;
+print s;
+print t;
+print p;
+print q;
+
+// 3
+// 0
+// "str"
+// ""
+// True
+// False

@@ -1,0 +1,13 @@
+int k = 5;
+
+int f(int &x, int y){
+  y = y + 5;
+  x = x + 2;
+  return y;
+}
+
+print f(k, k);
+print k;
+
+// 10
+// 7

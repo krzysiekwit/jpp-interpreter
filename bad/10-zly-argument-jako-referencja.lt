@@ -1,0 +1,6 @@
+void f(int &x){
+  x = x+1;
+  print x;
+}
+
+f(5);

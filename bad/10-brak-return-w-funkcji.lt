@@ -1,0 +1,5 @@
+int f(int x){
+  x=x+1;
+}
+
+print f(7);

@@ -1,0 +1,15 @@
+int k = 5;
+bool p = false;
+
+if(k>=5){
+  print -k;
+}
+
+if(p){
+  print p;
+}else{
+  print !p;
+}
+
+// -5
+// True

@@ -1,0 +1,5 @@
+int f(string x){
+  return x;
+}
+
+print f("str");

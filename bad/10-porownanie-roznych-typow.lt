@@ -1,0 +1,3 @@
+int k = 5;
+bool l = true;
+print k > l;

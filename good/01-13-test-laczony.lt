@@ -1,0 +1,56 @@
+int k = 5, l, m;
+bool p = true, q, r;
+string s = "string", t, u;
+
+int f(int &x, string &y){
+  print y;
+  x++;
+  k--;
+  return l;
+}
+
+void g(int &x, bool &y){
+  while(y){
+    if(x <= k){
+      x++;
+    }else{
+      y = false;
+    }
+  }
+}
+
+string h(){
+  void x(){
+    int l;
+    l = 5;
+    l = l*2;
+    print l;
+  }
+  x();
+  print l;
+  return t;
+}
+
+print f(k,s);
+print k;
+g(l, p);
+print l;
+print p;
+print h();
+print 17 % 5;
+print p && q;
+print !p && q;
+print -k;
+
+// "string"
+// 0
+// 5
+// 6
+// False
+# 10
+# 6
+# ""
+# 2
+// False
+// True
+// -5

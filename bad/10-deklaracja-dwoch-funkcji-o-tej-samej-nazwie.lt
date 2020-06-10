@@ -1,0 +1,9 @@
+int f(){
+  return 5;
+}
+
+string f(){
+  return "5";
+}
+
+f();
