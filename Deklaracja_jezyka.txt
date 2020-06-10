@@ -1,0 +1,174 @@
+Nieco zmodyfikowany przyk³adowy jêzyk Latte: https://www.mimuw.edu.pl/~ben/Zajecia/Mrj2019/Latte/
+
+Gramatyka jêzyka:
+
+-- programs -----------------------------------------------------------------------------------------------------------
+entrypoints	Program ;
+Program.	Program ::= [FDef] ;
+FuncDefVal.	FDef ::= Type Ident "(" [Arg] ")" Block ;
+separator	FDef "" ;
+ArgVal.		Arg ::= ArgType Ident;
+ArgRef.		Arg ::= ArgType "&" Ident;
+separator	Arg "," ;
+-- statements ---------------------------------------------------------------------------------------------------------
+Block.		Block ::= "{" [Stmt] "}" ;
+separator	Stmt "" ;
+Empty.		Stmt ::= ";" ;
+BStmt.		Stmt ::= Block ;
+Decl.		Stmt ::= ArgType [Item] ";" ;
+NoInit.		Item ::= Ident ;
+Init.		Item ::= Ident "=" Expr ";" ;
+ANew.		Item ::= Ident "=" "new" PType "[" Integer "]" ;
+AInitInt	Item ::= Ident "[" Integer "]" "=" Expr ";" ;
+AInitId.	Item ::= Ident "[" Ident "]" "=" Expr ";" ;
+separator nonempty Item "," ;
+Tuple.		Stmt ::= TupleVar "=" Tuple ;
+TupleVal.	Tuple ::= "(" [Tuple] ")" ;
+TupleExpr. 	Tuple ::= Expr6 ;
+separator	Tuple "," ;
+TupleVar.	TupleVar ::= "(" [TupleVar] ")" ;
+TupleVarId. 	TupleVar ::= Ident ;
+separator	TupleVar "," ;
+Ass.		Stmt ::= Ident "=" Expr ;
+Incr.		Stmt ::= Ident "++" ";" ;
+Decr.		Stmt ::= Ident "--" ";" ;
+Ret.		Stmt ::= "return" Expr ";" ;
+VRet.		Stmt ::= "return" ";" ;
+Cond.		Stmt ::= "if" "(" Expr ")" Stmt ;
+CondElse.	Stmt ::= "if" "(" Expr ")" Stmt "else" Stmt ;
+While.		Stmt ::= "while" "(" Expr ")" Stmt ;
+SExp.		Stmt ::= Expr ";" ;
+Break.		Stmt ::= "break" ";" ;
+Cont.		Stmt ::= "continue" ";" ;
+-- types ----------------------------------------------------------------------------------------------------------------
+AType.		Type ::= ArgType ;
+VType.		Type ::= VType ;
+ArgTypeP.	ArgType ::= PType ;
+ArgTypeA.	ArgType ::= AType ;
+Int.		PType ::= "int" ;
+String.		PType ::= "string" ;
+Bool.		PType ::= "bool" ;
+Void.		VType ::= "void" ;
+ArrayType.	AType ::= PType "[" "]" ;
+separator	Type "," ;
+-- expressions --------------------------------------------------------------------------------------------------------
+EVar.		Expr6 ::= Ident ;
+ELitInt.	Expr6 ::= Integer ;
+EString.	Expr6 ::= String ;
+ELitTrue.	Expr6 ::= "true" ;
+ELitFalse.	Expr6 ::= "false" ;
+EApp.		Expr6 ::= Ident "(" [Expr] ")" ;
+ArrayAccIdent.	Expr6 ::= Ident "[" Ident "]" ;
+ArrayAccInt.	Expr6 ::= Ident "[" Integer "]" ;
+Neg.		Expr5 ::= "-" Expr6 ;
+Not.		Expr5 ::= "!" Expr6 ;
+EMul.		Expr4 ::= Expr4 MulOp Expr5 ;
+EAdd.		Expr3 ::= Expr3 AddOp Expr4 ;
+ERel.		Expr2 ::= Expr2 RelOp Expr3 ;
+EAnd.		Expr1 ::= Expr2 "&&" Expr1 ;
+EOr.		Expr ::= Expr1 "||" Expr ;
+coercion 	Expr 6 ;
+separator 	Expr "," ;
+-- operators -----------------------------------------------------------------------------------------------------------
+Plus.		AddOp ::= "+" ;
+Minus.		AddOp ::= "-" ;
+Times.		MulOp ::= "*" ;
+Div.		MulOp ::= "/" ;
+Mod.		MulOp ::= "%" ;
+LTH.		RelOp ::= "<" ;
+LE.		RelOp ::= "<=" ;
+GTH.		RelOp ::= ">" ;
+GE.		RelOp ::= ">=" ;
+EQU.		RelOp ::= "==" ;
+NE.		RelOp ::= "!=" ;
+-- comments ---------------------------------------------------------------------------------------------------------
+comment	"#" ;
+comment	"//" ;
+comment	"/*" "*/" ;
+
+Gdzie Ident to identyfikator, String to napis otoczony znakami "", a Integer to liczba ca³kowita.
+
+Przyk³adowe programy:
+
+// Hello world
+
+int main() {
+  printString("Hello World!") ;
+  return 0 ;
+}
+
+// Wypisanie kwadratów liczb parzystych do 10
+
+int main() {
+  int i ;
+  i = 0 ;
+  while (i <= 10){
+    if (i % 2 == 0) printInt(i*i) ;
+    i++ ;
+  }
+  return 0 ;
+}
+
+
+Opis jêzyka:
+Program w tym jêzyku to lista definicji funkcji, która sk³ada siê z typu zwracanej wartoœci, nazwy, listy argumentów
+oraz cia³a. Ka¿da funkcja musi posiadaæ unikaln¹ nazwê, musi istnieæ funkcja main od której zaczyna siê wykonanie programu.
+
+Instrukcje:
+Instrukcje: pusta, z³o¿ona, if, while, return, continue, break jak w C i Javie.
+Oprócz tego instrukcjami s¹ przypisanie, deklaracja, postinkrementacja i postdekrementacja.
+Deklaracje zmiennych mog¹ wyst¹piæ w dowolnym miejscu bloku, a ka¿da zmienna musi byæ zadeklarowana przed u¿yciem.
+Jeœli zmienna nie jest jawnie inicjalizowana w momencie deklaracji, jest inicjalizowana wartoœci¹ domyœln¹ (0 dla int, "" dla string, false dla bool).
+Mo¿liwe jest tak¿e stworzenie krotki, np.:
+krotka = (1,2,3)
+(a,(b,c)) = (1,(2,3))
+
+Typy:
+Standardowe typy bool, int, string oraz void. Do tego tablice w nastêpuj¹cej formie:
+Deklaracja:
+int[] a;
+Tworzenie:
+a = new int[20];
+Przypisanie:
+int i = 0;
+a[i] = 5;
+
+Napisy mog¹ byæ konkatenowane przy u¿yciu operatora +.
+
+Parametry funkcji:
+Mog¹ byæ przekazane przez wartoœæ lub przez zmienn¹.
+Np.:
+int f(int& a, int b){
+...
+}
+Parametr a bêdzie przekazany przez zmienn¹, a b przez wartoœæ.
+
+Funkcje predefiniowane:
+void printInteger(int)	// wypisanie na wyjœcie wartoœci zmiennej typu int
+void printString(string)  // wypisanie na wyjœcie wartoœci zmiennej typu string
+void error()  // Funkcja wypisuje b³¹d i koñczy wykonanie programu
+string readString()  // wczytanie z wejœcia pojedynczej linii i danie jej w wyniku
+
+  Na 15 punktów
++  01 (trzy typy)
++  02 (litera³y, arytmetyka, porównania)
++  03 (zmienne, przypisanie)
++  04 (print)
++  05 (while, if)
++  06 (funkcje lub procedury, rekurencja)
++  07 (przez zmienn¹ / przez wartoœæ / in/out)
+  08 (zmienne read-only i pêtla for)
+  Na 20 punktów
++  09 (przes³anianie i statyczne wi¹zanie)
++  10 (obs³uga b³êdów wykonania)
++  11 (funkcje zwracaj¹ce wartoœæ)
+  Na 30 punktów
++  12 (4) (statyczne typowanie)
+  13 (2) (funkcje zagnie¿d¿one ze statycznym wi¹zaniem)
++  14 (1) (rekordy/tablice/listy)
++  15 (2) (krotki z przypisaniem)
++  16 (1) (break, continue)
+  17 (4) (funkcje wy¿szego rzêdu, anonimowe, domkniêcia)
+  18 (3) (generatory)
+
+Razem: 28
